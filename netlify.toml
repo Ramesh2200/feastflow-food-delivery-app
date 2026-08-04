@@ -1,0 +1,17 @@
+# Netlify Configuration File for FeastFlow Single-Page Application (SPA)
+
+[build]
+  # The path to the frontend project directory
+  base = "frontend"
+
+  # The command Netlify runs to build the project
+  command = "npm run build"
+
+  # The directory that contains the compiled static files to publish
+  publish = "dist"
+
+[[redirects]]
+  # Redirect all routes to index.html for Single-Page Application client-side routing
+  from = "/*"
+  to = "/index.html"
+  status = 200
