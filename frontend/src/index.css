@@ -172,3 +172,27 @@ body {
   margin: 0 auto;
   padding: 0 20px;
 }
+
+/* Mobile Responsive Utility Rules */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 10px !important;
+  }
+  
+  .modal-overlay {
+    padding: 10px !important;
+    align-items: center !important;
+  }
+
+  .btn-primary, .btn-secondary {
+    padding: 8px 12px !important;
+    font-size: 0.82rem !important;
+  }
+
+  header .container {
+    height: auto !important;
+    padding: 10px !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+}
