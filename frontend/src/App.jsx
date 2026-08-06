@@ -139,23 +139,9 @@ export default function App() {
   const [currentUser, setCurrentUser] = useState(() => {
     try {
       const saved = localStorage.getItem('feastflow_user');
-      return saved ? JSON.parse(saved) : {
-        userId: 2,
-        fullName: 'Ramesh',
-        email: 'ramesh@gmail.com',
-        role: 'CUSTOMER',
-        phone: '9876543210',
-        address: 'Gandhi Nagar, Mangalore'
-      };
+      return saved ? JSON.parse(saved) : null;
     } catch (e) {
-      return {
-        userId: 2,
-        fullName: 'Ramesh',
-        email: 'ramesh@gmail.com',
-        role: 'CUSTOMER',
-        phone: '9876543210',
-        address: 'Gandhi Nagar, Mangalore'
-      };
+      return null;
     }
   });
 
