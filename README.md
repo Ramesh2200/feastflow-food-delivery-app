@@ -1,85 +1,79 @@
-# 🍕 FeastFlow - Food Order & Delivery Application
+# 🍔 FeastFlow - End-to-End Food Delivery & Order Application
 
-A full-stack food ordering and delivery application built with **React**, **Java Servlets**, and **MySQL** (`food_delivery_db`).
+A modern, full-stack **Food Ordering & Gourmet Meal Delivery Platform** built with **React.js (Vite)**, **Tailwind / Custom CSS**, **Java Backend Servlets / REST Endpoints**, **MySQL Database**, and live **Vercel Cloud Deployment**.
 
----
-
-## 📁 Project Directory Structure
-
-```
-food-delivery-app/
-├── db/
-│   ├── food_delivery_db.sql        # Core MySQL database schema & sample data
-│   └── food_delivery_db_large.sql  # Expanded database (15 Restaurants x 20 Menu items)
-│
-├── backend/                        # Java Servlets REST API Backend (Port 8080)
-│   ├── pom.xml                     # Maven project configuration (Embedded Tomcat)
-│   └── src/main/java/com/foodapp/
-│       ├── MainServer.java         # Embedded Tomcat Server launcher
-│       ├── config/
-│       │   └── DBConnection.java   # MySQL JDBC Connection Provider (root:081506)
-│       ├── model/                  # POJO Models (User, Restaurant, MenuItem, Order, OrderItem)
-│       ├── dao/                    # Data Access Objects (UserDAO, RestaurantDAO, MenuDAO, OrderDAO)
-│       └── servlet/                # Jakarta Servlets (AuthServlet, RestaurantServlet, MenuServlet, OrderServlet, RootServlet)
-│
-└── frontend/                       # React + Vite Frontend App (Port 5173)
-    ├── package.json
-    ├── vite.config.js
-    ├── index.html
-    └── src/
-        ├── main.jsx
-        ├── App.jsx                 # Core Application logic & state
-        ├── index.css               # Design system & Dark/Light mode CSS variables
-        └── components/
-            ├── Navbar.jsx          # Header, search, theme toggle, cart counter
-            ├── HeroSection.jsx     # Visual promotional banner & stats
-            ├── CategoryFilter.jsx  # Horizontal cuisine filter chips
-            ├── RestaurantCard.jsx  # Restaurant visual card
-            ├── RestaurantDetail.jsx# Restaurant menu view with quantity controls
-            ├── CartDrawer.jsx      # Slide-out cart with promo discount code FEAST10
-            ├── CheckoutModal.jsx   # Checkout & payment method selection (UPI, COD, Card)
-            ├── OrderTracker.jsx    # Real-time order status tracking dashboard
-            ├── AdminDashboard.jsx  # Manager portal for order status updates
-            └── AuthModal.jsx       # Login & Register modal
-```
+> 📘 **Master Flow Diagrams Document**: All end-to-end flow diagrams, software architecture charts, and ERD schemas are consolidated in [`FLOW_DIAGRAMS.md`](file:///Users/chinnesh/Downloads/food-delivery-app%204/FLOW_DIAGRAMS.md).
 
 ---
 
-## 🚀 How to Run the Application
+## 🌐 Live Production Deployment
 
-### 1. Database Setup (MySQL)
-Make sure MySQL is running on `localhost:3306` with username `root` and password `081506`.
-
-Run the database script:
-```bash
-mysql -u root -p081506 < db/food_delivery_db_large.sql
-```
-
-### 2. Run Java Servlets Backend
-Navigate to the `backend` folder and compile & launch the server:
-```bash
-cd backend
-mvn clean compile
-mvn exec:java
-```
-> The Java backend will start listening on `http://localhost:8080`.
-
-### 3. Run React Frontend
-Navigate to the `frontend` folder and start the Vite dev server:
-```bash
-cd frontend
-npm install
-npm run dev -- --port 5173
-```
-> Open your browser at `http://localhost:5173`.
+- **Vercel Live URL**: [**`https://feastflow-food-delivery-app-k34c.vercel.app`**](https://feastflow-food-delivery-app-k34c.vercel.app)
+- **GitHub Repository**: [https://github.com/Ramesh2200/feastflow-food-delivery-app](https://github.com/Ramesh2200/feastflow-food-delivery-app)
 
 ---
 
-## 🔑 Login Credentials
+## 📌 Executive Summary
 
-| Role | Email | Password |
+**FeastFlow** enables users to discover artisanal kitchens, wood-fired pizzerias, and authentic Asian woks, customize food orders with real-time cart state management, checkout securely, and track delivery status in real-time.
+
+### Key Capabilities
+- **Cuisine Browsing & Filter Engine**: Filter 15+ top-rated restaurants and 300+ dishes by cuisine (Italian, Indian, Chinese, Healthy, Desserts).
+- **Interactive Shopping Cart Drawer**: Instant item quantity adjustments, add-on customizations, and subtotal calculations.
+- **Multi-Step Checkout & Payment**: Integrated delivery address input and payment options (UPI, Card, Cash on Delivery).
+- **Live Order Tracking**: Visual progress bar tracking order stages (`Received` $\rightarrow$ `Preparing` $\rightarrow$ `Out for Delivery` $\rightarrow$ `Delivered`).
+- **Responsive Dark Aesthetic**: Glassmorphism UI styled with curated vibrant typography and neon orange accents.
+
+---
+
+## 🛠️ Technology Stack
+
+| Layer | Technology / Library | Description |
 | :--- | :--- | :--- |
-| **Customer** | `ramesh@gmail.com` | `1234` |
-| **Manager** | `manager@gmail.com` | `1234` |
-| **Delivery Agent** | `delivery@gmail.com` | `1234` |
-| **Admin** | `admin@gmail.com` | `admin123` |
+| **Frontend SPA** | React.js 18, Vite 5, Lucide Icons | Single Page Application with fast HMR & modern state management |
+| **Styling** | Vanilla CSS3 / Glassmorphism | Custom HSL color variables, dark theme system, and micro-animations |
+| **Backend Framework** | Java 17 / Maven | REST API Controllers, servlets, and business logic layer |
+| **Database** | MySQL | Relational data persistence layer for users, restaurants, menus, and orders |
+| **Cloud Hosting** | Vercel | Production CDN deployment |
+
+---
+
+## 📐 Detailed Software System Architecture
+
+![Detailed Software System Architecture](docs/images/food_full_system_detailed.png)
+
+---
+
+## 🔄 End-to-End Order & Delivery Workflow Process
+
+![End-to-End Order Workflow Process](docs/images/food_order_workflow.png)
+
+---
+
+## 🗄️ Database Schema (ERD)
+
+![Database Schema Diagram](docs/images/food_database_schema.png)
+
+---
+
+## ⚡ Running Locally
+
+### 1. Run Frontend Application
+```bash
+cd "/Users/chinnesh/Downloads/food-delivery-app 4/frontend"
+npm install
+npm run dev
+```
+Open your browser at `http://localhost:5173`.
+
+### 2. Run Backend Application
+```bash
+cd "/Users/chinnesh/Downloads/food-delivery-app 4/backend"
+mvn clean package -DskipTests
+mvn exec:java -Dexec.mainClass="com.foodapp.MainServer"
+```
+
+---
+
+## 📄 License & Attribution
+Developed for FeastFlow Gourmet Food Delivery Platform. All rights reserved.
