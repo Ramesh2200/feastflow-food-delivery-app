@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { X, User as UserIcon, Phone, Lock, Mail, CheckCircle, AlertCircle, ShieldCheck, KeyRound, ArrowLeft } from 'lucide-react';
+import { GoogleLogin } from '@react-oauth/google';
 
-export default function AuthModal({ isOpen, onClose, currentUser, onLogin, onRegister, onLogout }) {
+export default function AuthModal({ isOpen, onClose, currentUser, onLogin, onRegister, onLogout, onGoogleLogin }) {
   const [isLoginView, setIsLoginView] = useState(true);
   const [step, setStep] = useState(1); // 1 = Form, 2 = OTP Verification
   const [email, setEmail] = useState('');
@@ -490,6 +491,51 @@ export default function AuthModal({ isOpen, onClose, currentUser, onLogin, onReg
             >
               {loading ? 'Processing...' : isLoginView ? 'Sign In to Account' : 'Send Email OTP & Continue ➔'}
             </button>
+
+            {/* Google OAuth Divider */}
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              margin: '12px 0 8px 0',
+              gap: '12px',
+              color: 'var(--text-muted)',
+              fontSize: '0.78rem',
+              fontWeight: '700'
+            }}>
+              <div style={{ flex: 1, height: '1px', background: 'var(--border-color)' }}></div>
+              <span>OR GOOGLE LOGIN</span>
+              <div style={{ flex: 1, height: '1px', background: 'var(--border-color)' }}></div>
+            </div>
+
+            {/* Google Login Component */}
+            <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+              <GoogleLogin
+                onSuccess={(credentialResponse) => {
+                  try {
+                    const base64Url = credentialResponse.credential.split('.')[1];
+                    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                    const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+                    const profile = JSON.parse(jsonPayload);
+                    onGoogleLogin && onGoogleLogin({
+                      fullName: profile.name || profile.given_name || 'Google User',
+                      email: profile.email,
+                      picture: profile.picture,
+                      googleId: profile.sub,
+                      role: 'CUSTOMER'
+                    });
+                  } catch (err) {
+                    setError('Failed to parse Google account info.');
+                  }
+                }}
+                onError={() => {
+                  setError('Google Authentication Failed. Please verify Google Client ID.');
+                }}
+                useOneTap
+                theme="filled_dark"
+                shape="pill"
+                width="100%"
+              />
+            </div>
 
           </form>
         )}

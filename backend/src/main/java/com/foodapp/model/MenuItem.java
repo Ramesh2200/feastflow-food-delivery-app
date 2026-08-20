@@ -1,5 +1,7 @@
 package com.foodapp.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class MenuItem {
     private int menuId;
     private int restaurantId;
@@ -10,9 +12,12 @@ public class MenuItem {
     private String image;
     private boolean available;
 
+    @JsonProperty("isVeg")
+    private int isVeg;
+
     public MenuItem() {}
 
-    public MenuItem(int menuId, int restaurantId, String itemName, String description, double price, String category, String image, boolean available) {
+    public MenuItem(int menuId, int restaurantId, String itemName, String description, double price, String category, String image, boolean available, int isVeg) {
         this.menuId = menuId;
         this.restaurantId = restaurantId;
         this.itemName = itemName;
@@ -21,6 +26,7 @@ public class MenuItem {
         this.category = category;
         this.image = image;
         this.available = available;
+        this.isVeg = isVeg;
     }
 
     public int getMenuId() { return menuId; }
@@ -46,4 +52,8 @@ public class MenuItem {
 
     public boolean isAvailable() { return available; }
     public void setAvailable(boolean available) { this.available = available; }
+
+    @JsonProperty("isVeg")
+    public int getIsVeg() { return isVeg; }
+    public void setIsVeg(int isVeg) { this.isVeg = isVeg; }
 }

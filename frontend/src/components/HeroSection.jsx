@@ -97,7 +97,7 @@ export default function HeroSection({ onExploreClick }) {
         top: '-40px',
         bottom: '-40px',
         width: '450px',
-        backgroundImage: 'url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80")',
+        backgroundImage: 'url("/images/pizza_hero.jpg")',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         opacity: '0.35',

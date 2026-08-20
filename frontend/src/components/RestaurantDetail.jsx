@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { ArrowLeft, Star, Clock, MapPin, Plus, Minus, Leaf } from 'lucide-react';
 
 export default function RestaurantDetail({ restaurant, menuItems, onBack, onAddToCart, cartItems }) {
-  const [filterVegOnly, setFilterVegOnly] = useState(false);
+  const [dietFilter, setDietFilter] = useState('ALL');
 
-  const filteredItems = filterVegOnly 
-    ? menuItems.filter(item => item.category === 'Pizza' || item.category === 'Breakfast' || item.category === 'Noodles' || item.category === 'Dessert' || item.category === 'Beverage')
-    : menuItems;
+  const filteredItems = menuItems.filter(item => {
+    if (dietFilter === 'VEG') return item.isVeg === 1 || item.isVeg === true || item.isVeg === '1';
+    if (dietFilter === 'NON_VEG') return item.isVeg === 0 || item.isVeg === false || item.isVeg === '0';
+    return true;
+  });
 
-  const categories = Array.from(new Set(menuItems.map(item => item.category || 'Main Course')));
+  const categories = Array.from(new Set(filteredItems.map(item => item.category || 'Main Course')));
 
   const getItemQuantityInCart = (menuId) => {
     const found = cartItems.find(item => item.menuId === menuId);
@@ -36,8 +38,12 @@ export default function RestaurantDetail({ restaurant, menuItems, onBack, onAddT
         marginBottom: '28px'
       }}>
         <img 
-          src={restaurant.image} 
+          src={restaurant.image || restaurant.imagePath || 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80'} 
           alt={restaurant.restaurantName}
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80';
+          }}
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
         />
         <div style={{
@@ -82,6 +88,8 @@ export default function RestaurantDetail({ restaurant, menuItems, onBack, onAddT
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '12px',
         marginBottom: '24px',
         background: 'var(--bg-card)',
         padding: '14px 20px',
@@ -90,25 +98,66 @@ export default function RestaurantDetail({ restaurant, menuItems, onBack, onAddT
       }}>
         <h2 style={{ fontSize: '1.25rem', fontWeight: '700' }}>Menu Items ({filteredItems.length})</h2>
 
-        <button 
-          onClick={() => setFilterVegOnly(!filterVegOnly)}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            background: filterVegOnly ? 'rgba(16, 185, 129, 0.2)' : 'rgba(255, 255, 255, 0.05)',
-            border: filterVegOnly ? '1px solid var(--accent-green)' : '1px solid var(--border-color)',
-            color: filterVegOnly ? 'var(--accent-green)' : 'var(--text-muted)',
-            padding: '8px 16px',
-            borderRadius: 'var(--radius-full)',
-            cursor: 'pointer',
-            fontWeight: '600',
-            fontSize: '0.85rem'
-          }}
-        >
-          <Leaf size={16} color="var(--accent-green)" />
-          <span>Veg Filter</span>
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <button 
+            onClick={() => setDietFilter('ALL')}
+            style={{
+              padding: '6px 14px',
+              borderRadius: 'var(--radius-full)',
+              background: dietFilter === 'ALL' ? 'var(--accent-gradient)' : 'rgba(255, 255, 255, 0.05)',
+              border: dietFilter === 'ALL' ? '1px solid var(--accent-primary)' : '1px solid var(--border-color)',
+              color: dietFilter === 'ALL' ? '#fff' : 'var(--text-muted)',
+              fontWeight: '700',
+              fontSize: '0.85rem',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            All Items
+          </button>
+
+          <button 
+            onClick={() => setDietFilter('VEG')}
+            style={{
+              padding: '6px 14px',
+              borderRadius: 'var(--radius-full)',
+              background: dietFilter === 'VEG' ? 'rgba(16, 185, 129, 0.25)' : 'rgba(255, 255, 255, 0.05)',
+              border: dietFilter === 'VEG' ? '1px solid #10b981' : '1px solid var(--border-color)',
+              color: dietFilter === 'VEG' ? '#10b981' : 'var(--text-muted)',
+              fontWeight: '700',
+              fontSize: '0.85rem',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10b981' }}></span>
+            <span>Pure Veg</span>
+          </button>
+
+          <button 
+            onClick={() => setDietFilter('NON_VEG')}
+            style={{
+              padding: '6px 14px',
+              borderRadius: 'var(--radius-full)',
+              background: dietFilter === 'NON_VEG' ? 'rgba(239, 68, 68, 0.25)' : 'rgba(255, 255, 255, 0.05)',
+              border: dietFilter === 'NON_VEG' ? '1px solid #ef4444' : '1px solid var(--border-color)',
+              color: dietFilter === 'NON_VEG' ? '#ef4444' : 'var(--text-muted)',
+              fontWeight: '700',
+              fontSize: '0.85rem',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ef4444' }}></span>
+            <span>Non-Veg</span>
+          </button>
+        </div>
       </div>
 
       {/* Categories & Dishes Grid */}
@@ -146,8 +195,12 @@ export default function RestaurantDetail({ restaurant, menuItems, onBack, onAddT
                       {/* Item Image */}
                       <div style={{ width: '110px', height: '110px', borderRadius: 'var(--radius-md)', overflow: 'hidden', flexShrink: 0 }}>
                         <img 
-                          src={item.image} 
+                          src={item.image || item.imagePath || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80'} 
                           alt={item.itemName}
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80';
+                          }}
                           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                         />
                       </div>
@@ -155,8 +208,28 @@ export default function RestaurantDetail({ restaurant, menuItems, onBack, onAddT
                       {/* Info & Add Button */}
                       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                         <div>
-                          <div style={{ fontWeight: '700', fontSize: '1rem', color: 'var(--text-main)', marginBottom: '4px' }}>
-                            {item.itemName}
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
+                            <span style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              width: '16px',
+                              height: '16px',
+                              borderRadius: '3px',
+                              border: (item.isVeg === 1 || item.isVeg === true || item.isVeg === '1') ? '1px solid #10b981' : '1px solid #ef4444',
+                              padding: '2px',
+                              flexShrink: 0
+                            }}>
+                              <span style={{
+                                width: '8px',
+                                height: '8px',
+                                borderRadius: '50%',
+                                background: (item.isVeg === 1 || item.isVeg === true || item.isVeg === '1') ? '#10b981' : '#ef4444'
+                              }}></span>
+                            </span>
+                            <span style={{ fontWeight: '700', fontSize: '1rem', color: 'var(--text-main)' }}>
+                              {item.itemName}
+                            </span>
                           </div>
 
                           <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>

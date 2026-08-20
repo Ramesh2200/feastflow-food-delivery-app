@@ -1,0 +1,7 @@
+frontend/node_modules
+backend/target
+backend/tomcat.8080
+db
+docs
+.DS_Store
+*.sql

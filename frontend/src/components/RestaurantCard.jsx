@@ -17,8 +17,12 @@ export default function RestaurantCard({ restaurant, onClick }) {
       {/* Image Banner Container */}
       <div style={{ position: 'relative', height: '190px', overflow: 'hidden' }}>
         <img 
-          src={restaurant.image || 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80'} 
+          src={restaurant.image || restaurant.imagePath || 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80'} 
           alt={restaurant.restaurantName}
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80';
+          }}
           style={{
             width: '100%',
             height: '100%',

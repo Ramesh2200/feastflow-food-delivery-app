@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "name": "feastflow-food-delivery",
   "builds": [
     {
       "src": "frontend/package.json",

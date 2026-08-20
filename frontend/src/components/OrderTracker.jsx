@@ -67,7 +67,7 @@ export default function OrderTracker({ orders, onRefreshOrders }) {
             }}>
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ fontSize: '1.25rem', fontWeight: '800' }}>Order #{order.orderId}</span>
+                  <span style={{ fontSize: '1.25rem', fontWeight: '800' }}>Order #{order.orderId || order.order_id || '1001'}</span>
                   <span style={{
                     background: 'var(--accent-gradient)',
                     padding: '3px 10px',
@@ -76,19 +76,19 @@ export default function OrderTracker({ orders, onRefreshOrders }) {
                     fontWeight: '700',
                     color: '#fff'
                   }}>
-                    {order.restaurantName || 'Restaurant'}
+                    {order.restaurantName || order.restaurant_name || 'Restaurant'}
                   </span>
                 </div>
                 <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)', marginTop: '4px' }}>
-                  Placed on: {order.orderDate}
+                  Placed on: {order.orderDate || order.order_date || 'Just now'}
                 </div>
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                 <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Payment ({order.paymentMethod})</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Payment ({order.paymentMethod || order.payment_method || 'UPI'})</div>
                   <div style={{ fontSize: '1.25rem', fontWeight: '800', color: 'var(--accent-primary)' }}>
-                    ₹{order.totalAmount.toFixed(2)}
+                    ₹{(order.totalAmount !== undefined ? order.totalAmount : (order.total_amount || 0)).toFixed(2)}
                   </div>
                 </div>
               </div>
@@ -184,7 +184,7 @@ export default function OrderTracker({ orders, onRefreshOrders }) {
                 <div>
                   <div style={{ fontWeight: '700', fontSize: '0.95rem' }}>Ajay (Delivery Agent • 7777777777)</div>
                   <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    <MapPin size={13} color="var(--accent-primary)" /> {order.deliveryAddress}
+                    <MapPin size={13} color="var(--accent-primary)" /> {order.deliveryAddress || order.delivery_address || 'Delivery Address'}
                   </div>
                 </div>
               </div>
@@ -212,9 +212,9 @@ export default function OrderTracker({ orders, onRefreshOrders }) {
                 Ordered Items:
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                {order.items && order.items.map(item => (
+                {order.items && order.items.map((item, idx) => (
                   <div 
-                    key={item.orderItemId}
+                    key={item.orderItemId || item.order_item_id || idx}
                     style={{
                       background: 'rgba(255,255,255,0.05)',
                       border: '1px solid var(--border-color)',
@@ -223,7 +223,7 @@ export default function OrderTracker({ orders, onRefreshOrders }) {
                       fontSize: '0.85rem'
                     }}
                   >
-                    <span style={{ color: 'var(--accent-primary)', fontWeight: '700' }}>{item.quantity}x</span> {item.itemName} (₹{item.price.toFixed(2)})
+                    <span style={{ color: 'var(--accent-primary)', fontWeight: '700' }}>{item.quantity}x</span> {item.itemName || item.item_name || 'Dish'} (₹{(item.price || 0).toFixed(2)})
                   </div>
                 ))}
               </div>

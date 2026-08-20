@@ -40,7 +40,7 @@ export default function Navbar({
               Feast<span style={{ color: 'var(--accent-primary)' }}>Flow</span>
             </span>
             <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', marginTop: '-4px', fontWeight: '600' }}>
-              15 RESTAURANTS • 300 DISHES
+              28 RESTAURANTS • 840+ DISHES
             </div>
           </div>
         </div>
@@ -67,7 +67,7 @@ export default function Navbar({
             <Search size={18} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-dim)' }} />
             <input 
               type="text"
-              placeholder="Search 15 restaurants or 300 dishes..."
+              placeholder="Search 28 restaurants or 840+ dishes..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               style={{

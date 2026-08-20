@@ -41,6 +41,13 @@ public class MenuDAO {
     }
 
     private MenuItem mapMenuItem(ResultSet rs) throws SQLException {
+        int isVegVal = 1;
+        try {
+            isVegVal = rs.getInt("is_veg");
+        } catch (SQLException e) {
+            isVegVal = 1;
+        }
+
         return new MenuItem(
                 rs.getInt("menu_id"),
                 rs.getInt("restaurant_id"),
@@ -49,7 +56,8 @@ public class MenuDAO {
                 rs.getDouble("price"),
                 rs.getString("category"),
                 rs.getString("image"),
-                rs.getBoolean("available")
+                rs.getBoolean("available"),
+                isVegVal
         );
     }
 }
