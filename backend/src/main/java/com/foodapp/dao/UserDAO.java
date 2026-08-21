@@ -32,7 +32,7 @@ public class UserDAO {
             stmt.setString(3, user.getPassword());
             stmt.setString(4, user.getPhone());
             stmt.setString(5, user.getRole() != null ? user.getRole() : "CUSTOMER");
-            stmt.setString(6, user.getAddress());
+            stmt.setString(6, user.getAddress() != null ? user.getAddress() : "123 Main Street");
             stmt.setString(7, user.getCity() != null ? user.getCity() : "Bengaluru");
             stmt.setString(8, user.getState() != null ? user.getState() : "Karnataka");
             stmt.setString(9, user.getPincode() != null ? user.getPincode() : "560001");

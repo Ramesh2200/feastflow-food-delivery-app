@@ -126,10 +126,10 @@ export default function AuthModal({ isOpen, onClose, currentUser, onLogin, onReg
         password, 
         phone, 
         role: 'CUSTOMER', 
-        address: 'Gandhi Nagar', 
-        city: 'Mangalore', 
+        address: '123 Main Street', 
+        city: 'Bengaluru', 
         state: 'Karnataka', 
-        pincode: '575001' 
+        pincode: '560001' 
       });
 
       if (regRes && !regRes.success) {
@@ -391,7 +391,7 @@ export default function AuthModal({ isOpen, onClose, currentUser, onLogin, onReg
                     required 
                     value={fullName} 
                     onChange={(e) => setFullName(e.target.value)} 
-                    placeholder="Ramesh K"
+                    placeholder="Enter full name"
                     style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)', padding: '10px 14px', color: 'var(--text-main)', fontSize: '0.9rem', outline: 'none' }}
                   />
                 </div>
@@ -405,7 +405,7 @@ export default function AuthModal({ isOpen, onClose, currentUser, onLogin, onReg
                     required 
                     value={phone} 
                     onChange={(e) => setPhone(e.target.value)} 
-                    placeholder="7672047816"
+                    placeholder="Enter phone number"
                     style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)', padding: '10px 14px', color: 'var(--text-main)', fontSize: '0.9rem', outline: 'none' }}
                   />
                 </div>
@@ -421,7 +421,7 @@ export default function AuthModal({ isOpen, onClose, currentUser, onLogin, onReg
                 required 
                 value={email} 
                 onChange={(e) => setEmail(e.target.value)} 
-                placeholder="ballariramesh0825@gmail.com"
+                placeholder="Enter email address"
                 style={{ width: '100%', background: 'rgba(0,0,0,0.3)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)', padding: '10px 14px', color: 'var(--text-main)', fontSize: '0.9rem', outline: 'none' }}
               />
             </div>
